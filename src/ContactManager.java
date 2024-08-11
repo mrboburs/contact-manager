@@ -1,11 +1,11 @@
 import java.util.Scanner;
 
-public class Main {
-  static   Contact [] contactArray= new  Contact[2];
-    static int currentIndex=0;
+public class ContactManager {
 
-    public static void main(String[] args) {
+      Contact [] contactArray= new  Contact[2];
+  int currentIndex=0;
 
+    public  void start(){
         boolean b=true;
         while (b){
             menu();
@@ -18,13 +18,15 @@ public class Main {
                     addToArray(contact);
                     break;
                 case 2 :
-                 printContact();
+                    printContact();
                     break;
                 case 3 :
-                    String query=getQuery();
+                    String query=searchQuery();
                     search(query);
                     break;
                 case 4 :
+                    String phone=deleteContactQuery();
+                    deleteContactFromArray(phone);
                     break;
                 case 0 :
                     b=false;
@@ -34,49 +36,63 @@ public class Main {
             }
         }
 
-        System.out.println("that is end");
+
     }
-    public  static boolean isPhoneExist(String phone){
+
+    public   boolean isPhoneExist(String phone){
         for (Contact contact :contactArray){
 
-               if (contact!=null && contact.phone.equals(phone) ){
-                   return true;
+            if (contact!=null && contact.phone.equals(phone) ){
+                return true;
             }
         }
         return  false;
     }
-
-    public static void search(String query){
+    public  String deleteContactQuery(){
+        System.out.print("Enter query: ");
+        Scanner scanner =new Scanner(System.in);
+        return  scanner.next();
+    }
+    public void deleteContactFromArray(String phone){
+        for (int i=0;i<contactArray.length;i++){
+            if (contactArray[i]!=null && contactArray[i].phone.equals(phone)){
+                contactArray[i]=null;
+                System.out.println("contact deleted!!!");
+                break;
+            }
+        }
+    }
+    public  void search(String query){
         query=query.toLowerCase();
         for (Contact c:contactArray){
             if (c==null) {
                 continue;
             }
             if (c.name.toLowerCase().contains(query)
-                        ||c.phone.contains(query)){
-                    System.out.println("---- "+c.name+"  -  "+c.phone+"  ----");
-                }
+                    ||c.phone.contains(query)){
+                System.out.println("---- "+c.name+"  -  "+c.phone+"  ----");
+            }
 
         }
     }
 
-     public  static  String getQuery(){
+    public   String searchQuery(){
         System.out.print("Enter query: ");
         Scanner scanner =new Scanner(System.in);
-       return  scanner.next();
-
-   }
-
-     public static void printContact(){
-    for (Contact c: contactArray){
-        if (c!=null){
-            System.out.println(c.name+"  "+c.phone);
-        }
+        return  scanner.next();
 
     }
-}
 
-     public static boolean isValidContact(Contact contact){
+    public void printContact(){
+        for (Contact c: contactArray){
+            if (c!=null){
+                System.out.println(c.name+"  "+c.phone);
+            }
+
+        }
+    }
+
+    public  boolean isValidContact(Contact contact){
         if (contact.name==null || contact.name.trim().length()<2){
             System.out.println("invalid contact name");
             return  false;
@@ -95,30 +111,30 @@ public class Main {
         return  true;
     }
 
-     public  static  void addToArray(Contact contact){
-         if (!isValidContact(contact)) {
-             return;
-         }
-         if (isPhoneExist(contact.phone)){
-             System.out.println("phone number exists  ");
-             return;
-         }
+    public    void addToArray(Contact contact){
+        if (!isValidContact(contact)) {
+            return;
+        }
+        if (isPhoneExist(contact.phone)){
+            System.out.println("phone number exists  ");
+            return;
+        }
 
-             if (currentIndex==contactArray.length){
-                 Contact[ ]newArray= new Contact [contactArray.length*2];
-                 for (int i=0;i<contactArray.length;i++){
-                     newArray[i]=contactArray[i];
+        if (currentIndex==contactArray.length){
+            Contact[ ]newArray= new Contact [contactArray.length*2];
+            for (int i=0;i<contactArray.length;i++){
+                newArray[i]=contactArray[i];
 
-                 }
-                 contactArray=newArray;
-             }
-             contactArray[currentIndex]=contact;
-             currentIndex++;
-             System.out.println("contact added");
+            }
+            contactArray=newArray;
+        }
+        contactArray[currentIndex]=contact;
+        currentIndex++;
+        System.out.println("contact added");
 
-}
+    }
 
-     public static  Contact addContact(){
+    public  Contact addContact(){
         Scanner scanner=new Scanner(System.in);
 
         System.out.print("Enter name: ");
@@ -133,9 +149,9 @@ public class Main {
 
         return  contact;
 
-     }
+    }
 
-     public static void menu(){
+    public  void menu(){
         System.out.println("** Menu **");
         System.out.println("1. Add Contact");
         System.out.println("2. Add List");
@@ -146,7 +162,7 @@ public class Main {
 
     }
 
-     public  static  int getMenuNumber(){
+    public   int getMenuNumber(){
         System.out.print("Choose Menu: ");
         Scanner scanner=new Scanner(System.in);
         return scanner.nextInt();
