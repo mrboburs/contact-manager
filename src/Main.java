@@ -21,10 +21,12 @@ public class Main {
                  printContact();
                     break;
                 case 3 :
-                    String query=getQuery();
+                    String query=searchQuery();
                     search(query);
                     break;
                 case 4 :
+                    String phone=deleteContactQuery();
+                    deleteContactFromArray(phone);
                     break;
                 case 0 :
                     b=false;
@@ -45,7 +47,20 @@ public class Main {
         }
         return  false;
     }
-
+    public static String deleteContactQuery(){
+        System.out.print("Enter query: ");
+        Scanner scanner =new Scanner(System.in);
+        return  scanner.next();
+    }
+    public static void deleteContactFromArray(String phone){
+        for (int i=0;i<contactArray.length;i++){
+            if (contactArray[i]!=null && contactArray[i].phone.equals(phone)){
+                contactArray[i]=null;
+                System.out.println("contact deleted!!!");
+                break;
+            }
+        }
+    }
     public static void search(String query){
         query=query.toLowerCase();
         for (Contact c:contactArray){
@@ -60,7 +75,7 @@ public class Main {
         }
     }
 
-     public  static  String getQuery(){
+     public  static  String searchQuery(){
         System.out.print("Enter query: ");
         Scanner scanner =new Scanner(System.in);
        return  scanner.next();
