@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class ContactManager {
 
       Contact [] contactArray= new  Contact[2];
-  int currentIndex=0;
+      int currentIndex=0;
 
     public  void start(){
         boolean b=true;
