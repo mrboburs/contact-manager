@@ -143,9 +143,8 @@ public class ContactManager {
         System.out.print("Enter phone: ");
         String phone=scanner.next();
 
-        Contact contact=new Contact();
-        contact.name=name;
-        contact.phone=phone;
+        Contact contact=new Contact(name,phone);
+
 
         return  contact;
 
