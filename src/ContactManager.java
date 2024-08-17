@@ -42,7 +42,7 @@ public class ContactManager {
     public   boolean isPhoneExist(String phone){
         for (Contact contact :contactArray){
 
-            if (contact!=null && contact.phone.equals(phone) ){
+            if (contact!=null && contact.getPhone().equals(phone) ){
                 return true;
             }
         }
@@ -55,7 +55,7 @@ public class ContactManager {
     }
     public void deleteContactFromArray(String phone){
         for (int i=0;i<contactArray.length;i++){
-            if (contactArray[i]!=null && contactArray[i].phone.equals(phone)){
+            if (contactArray[i]!=null && contactArray[i].getPhone().equals(phone)){
                 contactArray[i]=null;
                 System.out.println("contact deleted!!!");
                 break;
@@ -68,9 +68,9 @@ public class ContactManager {
             if (c==null) {
                 continue;
             }
-            if (c.name.toLowerCase().contains(query)
-                    ||c.phone.contains(query)){
-                System.out.println("---- "+c.name+"  -  "+c.phone+"  ----");
+            if (c.getName().toLowerCase().contains(query)
+                    ||c.getPhone().contains(query)){
+                System.out.println("---- "+c.getName()+"  -  "+c.getPhone()+"  ----");
             }
 
         }
@@ -86,22 +86,22 @@ public class ContactManager {
     public void printContact(){
         for (Contact c: contactArray){
             if (c!=null){
-                System.out.println(c.name+"  "+c.phone);
+                System.out.println(c.getName()+"  "+c.getPhone());
             }
 
         }
     }
 
     public  boolean isValidContact(Contact contact){
-        if (contact.name==null || contact.name.trim().length()<2){
+        if (contact.getName()==null || contact.getName().trim().length()<2){
             System.out.println("invalid contact name");
             return  false;
         }
-        if (contact.phone==null || contact.phone.trim().length()<2){
+        if (contact.getPhone()==null || contact.getPhone().trim().length()<2){
             System.out.println("invalid contact phone");
             return  false;
         }
-        char [] phoneArr=contact.phone.toCharArray();
+        char [] phoneArr=contact.getPhone().toCharArray();
         for (char c:phoneArr){
             if (c<'0'||c>'9'){
                 System.out.println("invalid contact phone");
@@ -115,7 +115,7 @@ public class ContactManager {
         if (!isValidContact(contact)) {
             return;
         }
-        if (isPhoneExist(contact.phone)){
+        if (isPhoneExist(contact.getPhone())){
             System.out.println("phone number exists  ");
             return;
         }
